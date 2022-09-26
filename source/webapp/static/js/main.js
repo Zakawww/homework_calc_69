@@ -1,62 +1,56 @@
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
+async function changeButton(id, event) {
+    console.log('target: ', event.target);
+    let pk = await event.target.dataset['pk'];
+    console.log(pk)
+
+    let response = await fetch(`http://localhost:8000/articles/${pk}/like   `)
+    let data = await response.json()
+    console.log(data)
+    let likes = data['likes']
+    console.log(likes)
+    let likes_p = document.getElementById(`likes_p-${pk}`)
+    likes_p.innerText = 'Лайков: ' + likes
+    let button = await document.getElementById('like')
+
+
+    if (button.innerText === 'like') {
+        button.innerText = 'dislike'
+    } else if (button.innerText === 'dislike') {
+        button.innerText = 'like'
     }
-    return cookieValue;
+
 }
 
-const csrftoken = getCookie('csrftoken');
 
-async function getResult(event) {
-    event.preventDefault()
-    let url = await event.target.href
-    let firstinput = document.getElementById('firstinput')
-    let secondinput = document.getElementById('secondinput')
-    let a = firstinput.value
-    let b = secondinput.value
-    console.log(a, b)
-    let body = {
-        "a": a,
-        "b": b
-    }
-    let response = await makeRequest(url, body)
-
-    let p = document.getElementById('result')
-    p.style = 'color:green'
-    p.innerText = response.answer
+let button = document.getElementsByClassName('btn_like')
+for (let i = 0; i < button.length; i++) {
+    button[i].addEventListener('click', () => changeButton(`like${(i + 1)}`, event))
 }
 
-let btnList = document.getElementsByClassName('btn')
-for (let i = 0; i < btnList.length; i++)
-    btnList[i].addEventListener('click', () => getResult(event))
+async function changeButtonCom(id, event) {
+    console.log('target: ', event.target);
+    let pk = await event.target.dataset['pk'];
+    console.log('pk_com:' + pk)
 
+    let response = await fetch(`http://localhost:8000/comment/${pk}/like`)
+    let data = await response.json()
+    console.log(data)
+    let likes = data['likes']
+    console.log(likes)
+    let likes_p = document.getElementById(`comment_p-${pk}`)
+    likes_p.innerText = 'Лайков: ' + likes
+    let button = await document.getElementById(id)
+    console.log(button)
 
-async function makeRequest(url, body) {
-    let response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-            'X-CSRFToken': csrftoken
-        },
-        body: JSON.stringify(body),
-        mode: 'same-origin'
-    });
-
-    if (response.ok) {
-        return await response.json();
-    } else {
-        let p = document.getElementById('result')
-        p.style = 'color:red'
-        let error = await response.json()
-        p.innerText = error.error
-        console.log(await response.json())
+    if (button.innerText === 'like') {
+        button.innerText = 'dislike'
+    } else if (button.innerText === 'dislike') {
+        button.innerText = 'like'
     }
+
+}
+
+let button_com = document.getElementsByClassName('btn_like_com')
+for (let i = 0; i < button_com.length; i++) {
+    button_com[i].addEventListener('click', () => changeButtonCom(`like_com${(i + 1)}`, event))
 }
