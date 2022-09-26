@@ -9,6 +9,58 @@
     "content": "test1",
     "author": 1,
     "tags": [],
+    "user": [
+      1
+    ]
+  }
+},
+{
+  "model": "webapp.article",
+  "pk": 2,
+  "fields": {
+    "created_at": "2022-09-26T12:10:28.530Z",
+    "updated_at": "2022-09-26T12:10:28.530Z",
+    "title": "qwdqwdqwd",
+    "content": "qwdqwdqwdsaas",
+    "author": 1,
+    "tags": [],
+    "user": []
+  }
+},
+{
+  "model": "webapp.article",
+  "pk": 3,
+  "fields": {
+    "created_at": "2022-09-26T12:10:56.663Z",
+    "updated_at": "2022-09-26T12:10:56.663Z",
+    "title": "aaa",
+    "content": "asczxcz",
+    "author": 1,
+    "tags": [],
+    "user": []
+  }
+},
+{
+  "model": "webapp.comment",
+  "pk": 1,
+  "fields": {
+    "created_at": "2022-09-26T12:10:45.338Z",
+    "updated_at": "2022-09-26T12:10:45.338Z",
+    "text": "wdwdassssssssssssssssssa",
+    "author": 1,
+    "article": 2,
+    "user": []
+  }
+},
+{
+  "model": "webapp.comment",
+  "pk": 2,
+  "fields": {
+    "created_at": "2022-09-26T12:10:59.864Z",
+    "updated_at": "2022-09-26T12:10:59.864Z",
+    "text": "asdascxs",
+    "author": 1,
+    "article": 3,
     "user": []
   }
 }
